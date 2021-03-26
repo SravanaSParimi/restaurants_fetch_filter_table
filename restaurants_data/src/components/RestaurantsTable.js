@@ -2,8 +2,12 @@ import React from 'react';
 import './restaurants.css';
 
 function RestaurantsTable (props) {
-
       const data = props.tableData;
+      // Client side pagination technique
+      const indexOfLastRow = props.currentPage * props.perPage;
+      const indexOfFirstRow = indexOfLastRow - props.perPage;
+      const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
+
       data.sort((a, b) => {
           if(a.name < b.name) {
               return -1;
@@ -19,7 +23,7 @@ function RestaurantsTable (props) {
         );
       } else {
         return (
-          data.map(d => 
+          currentRows.map(d => 
             <tr key={d.id}>
                 <td> {d.name} </td>
                 <td> {d.city} </td>
